@@ -29,6 +29,11 @@
     }
 }
 
+.played-cards{
+    right: 25px;
+    transform: scale(1) translateY(-170px) translateX(160px) rotate(-10deg);
+}
+
 .pick-card {
     transition: all 125ms ease-in-out;
     animation: pick-card-animation 1.25s ease-in-out;
