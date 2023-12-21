@@ -3,16 +3,20 @@
     align-items: center;
     font-size: 24px;
     gap: 16px;
-    background-color: orange;
+    background-color: lightgray;
     width: 200px;
 
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
 
     img{
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         object-fit: cover;
         border-radius: 50%;
     }
+}
+
+.player-active{
+    background-color: orange !important;
 }
