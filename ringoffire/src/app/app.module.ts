@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import { GameInfoComponent } from './game-info/game-info.component';
 import {MatCardModule} from '@angular/material/card';
+import { EndScreenComponent } from './end-screen/end-screen.component';
 
 
 
@@ -29,7 +30,8 @@ import {MatCardModule} from '@angular/material/card';
     GameComponent,
     PlayerComponent,
     DialogAddPlayerComponent,
-    GameInfoComponent
+    GameInfoComponent,
+    EndScreenComponent
   ],
   imports: [
     BrowserModule,

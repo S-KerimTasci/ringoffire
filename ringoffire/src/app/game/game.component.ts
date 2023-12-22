@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from '../models/game';
 import { MatDialog, } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -13,7 +14,8 @@ export class GameComponent implements OnInit {
   game: Game;
   currentCard: string = '';
 
-  constructor(public dialog: MatDialog) { };
+  constructor(public dialog: MatDialog, private router: Router) { };
+  
 
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class GameComponent implements OnInit {
         setTimeout(() => {
           this.game.playedCards.push(this.currentCard)
           this.pickCardAnimation = false;
+          if (this.game.stack.length == 0) {
+            this.router.navigateByUrl('/end')
+          }
+          console.log(this.game.stack)
         }, 1250);
       }
       

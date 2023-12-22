@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { Game } from '../models/game';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-start-screen',
-  templateUrl: './start-screen.component.html',
-  styleUrl: './start-screen.component.scss'
+  selector: 'app-end-screen',
+  templateUrl: './end-screen.component.html',
+  styleUrl: './end-screen.component.scss'
 })
+export class EndScreenComponent {
 
-export class StartScreenComponent {
+  game: Game;
 
   constructor(private router: Router) { };
 
