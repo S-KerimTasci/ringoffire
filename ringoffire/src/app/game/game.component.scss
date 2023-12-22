@@ -75,3 +75,19 @@
     left: 100px;
     right: 100px;
 }
+
+.logo{
+    img{
+    width: 80px;
+    height: auto;
+    background-color: ghostwhite;
+    border-radius: 50px;
+    cursor: pointer;
+    }
+    position: absolute;
+    top: 32px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}

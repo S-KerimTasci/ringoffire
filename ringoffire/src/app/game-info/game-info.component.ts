@@ -16,9 +16,9 @@ export class GameInfoComponent implements OnChanges {
     { title: 'Chicks', description: 'All girls drink.' },
     { title: 'Heaven', description: 'Put your hands up! The last player drinks!' },
     { title: 'Mate', description: 'Pick a mate. Your mate must always drink when you drink and the other way around.' },
-    { title: 'Thumbmaster', description: '' },
+    { title: 'Thumbmaster', description: 'Everybody with a thumb drinks' },
     { title: 'Men', description: 'All men drink.' },
-    { title: 'Quizmaster', description: '' },
+    { title: 'Quizmaster', description: 'Ask the person on your right a question. If the answer is wrong they drink. If the answer is right you drink' },
     { title: 'Never have i ever...', description: 'Say something you nnever did. Everyone who did it has to drink.' },
     { title: 'Rule', description: 'Make a rule. Everyone needs to drink when he breaks the rule.' },
   ];
@@ -32,7 +32,7 @@ export class GameInfoComponent implements OnChanges {
   ngOnChanges():void{
     if (this.card) {
       
-    console.log('current card is', this.card)
+    // console.log('current card is', this.card)
     let cardnumber = +this.card.split('_')[1];
     this.title = this.cardAction[cardnumber - 1].title;
     this.description = this.cardAction[cardnumber - 1].description;
