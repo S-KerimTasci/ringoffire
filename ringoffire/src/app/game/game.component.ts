@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Game } from '../models/game';
 import { MatDialog, } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { Router } from '@angular/router';
+import { Firestore, collectionData, collection, onSnapshot, doc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -13,9 +15,44 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   game: Game;
   currentCard: string = '';
+  firestore: Firestore = inject(Firestore);
 
-  constructor(public dialog: MatDialog, private router: Router) { };
+  unsubGame;
+
+  items$;
+  item;
+
+  constructor(public dialog: MatDialog, private router: Router) { 
+    // const itemCollection = collection(this.firestore, 'games');
+    // this.item$ = collectionData(itemCollection);
+
+    this.unsubGame = onSnapshot( this.getGameRef(), (list) => {
+      list.forEach(element => {
+        console.log('Game Update' +  JSON.stringify(element))
+      });
+    })
+
+    this.items$ = collectionData(this.getGameRef());
+    this.item = this.items$.subscribe( (list) => {
+      list.forEach(element => {
+        console.log('Game Update' +  JSON.stringify(element))
+      });
+    })
+  };
+
+  ngonDestroy(){
+    this.unsubGame();
+    this.item.unsubscirbe();
+  }
   
+
+  getGameRef(){
+    return collection(this.firestore, 'games');
+  }
+
+  getSingleDocRef(colId : string, docId: string){
+    return doc(collection(this.firestore, colId), docId);
+  }
 
 
   ngOnInit(): void {
