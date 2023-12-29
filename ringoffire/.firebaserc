@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ringoffire-d68d7": {
+      "hosting": {
+        "ringoffire": [
+          "ringoffire-d68d7"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ringoffire-d68d7"
+  }
+}

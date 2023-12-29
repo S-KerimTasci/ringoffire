@@ -17,6 +17,8 @@ import {FormsModule} from '@angular/forms';
 import { GameInfoComponent } from './game-info/game-info.component';
 import {MatCardModule} from '@angular/material/card';
 import { EndScreenComponent } from './end-screen/end-screen.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 
 
@@ -44,6 +46,8 @@ import { EndScreenComponent } from './end-screen/end-screen.component';
     MatInputModule,
     FormsModule,
     MatCardModule,
+    provideFirebaseApp(() => initializeApp({"projectId":"ringoffire-d68d7","appId":"1:240643994729:web:f08ac5d217201dcd4e9ef8","storageBucket":"ringoffire-d68d7.appspot.com","apiKey":"AIzaSyCPA8us7pKMjVm7qLhV75P4Cy6M9ZSlpIg","authDomain":"ringoffire-d68d7.firebaseapp.com","messagingSenderId":"240643994729"})),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]
