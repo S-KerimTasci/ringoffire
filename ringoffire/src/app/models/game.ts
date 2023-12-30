@@ -4,6 +4,15 @@ export class Game{
     public playedCards: string[]  = [];
     public currentPlayer: number  = 0;
 
+    public toJSON(){
+        return {
+            players : this.players,
+            stack : this.stack,
+            playedCards : this.playedCards,
+            currentPlayer : this.currentPlayer,
+        }
+    }
+
     constructor (){
         for (let i = 1; i < 14; i++) {
             this.stack.push('ace_'+ i);

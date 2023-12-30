@@ -3,7 +3,7 @@ import { Game } from '../models/game';
 import { MatDialog, } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { Router } from '@angular/router';
-import { Firestore, collectionData, collection, onSnapshot, doc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, onSnapshot, doc, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -59,9 +59,10 @@ export class GameComponent implements OnInit {
     this.newGame();
   }
 
-  newGame() {
+  async newGame() {
     this.game = new Game();
     console.log(this.game)
+    await addDoc(this.getGameRef(), this.game.toJSON())
   }
 
   takeCard() {
