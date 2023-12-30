@@ -6,7 +6,7 @@ import { EndScreenComponent } from './end-screen/end-screen.component';
 
 const routes: Routes = [
   { path: '', component: StartScreenComponent },
-  { path: 'game/:id', component: GameComponent },
+  { path: 'game', component: GameComponent },
   { path: 'end', component: EndScreenComponent },
 ];
 
