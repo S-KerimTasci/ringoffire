@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Injectable } from '@angular/core';
 import { Game } from '../models/game';
 import { MatDialog, } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, collectionData, collection, onSnapshot, doc, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
+@Injectable({ providedIn: 'root' })
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -77,7 +78,7 @@ export class GameComponent implements OnInit {
   async newGame() {
     this.game = new Game();
     console.log(this.game)
-    //await addDoc(this.getGameRef(), this.game.toJSON())
+    
   }
 
   takeCard() {
