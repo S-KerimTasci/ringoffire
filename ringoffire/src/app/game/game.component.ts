@@ -26,16 +26,16 @@ export class GameComponent implements OnInit {
     // const itemCollection = collection(this.firestore, 'games');
     // this.item$ = collectionData(itemCollection);
 
-    // this.unsubGame = onSnapshot( this.getGameRef(), (list) => {
-    //   list.forEach(element => {
-    //     console.log('Game Update' +  element)
-    //   });
-    // })
+    this.unsubGame = onSnapshot( this.getGameRef(), (list) => {
+      list.forEach(element => {
+        console.log(element.data())
+      });
+    })
 
     this.items$ = collectionData(this.getGameRef());
     this.item = this.items$.subscribe( (list) => {
       list.forEach(element => {
-        console.log('Game Update' +  element)
+        console.log(element)
       });
     })
   };
@@ -62,11 +62,12 @@ export class GameComponent implements OnInit {
       
       this.unsubGame = onSnapshot(this.getSingleDocRef("games", params['id']), (element : any) => {
         console.log('Game ID: ' + element.id);
+        console.log(element.data().players)
 
-        this.game.currentPlayer = element.currentPlayer,
-        this.game.playedCards = element.playedCards;
-        this.game.stack = element.stack;
-        this.game.players = element.players;
+        this.game.currentPlayer = element.data().currentPlayer,
+        this.game.playedCards = element.data().playedCards;
+        this.game.stack = element.data().stack;
+        this.game.players = element.data().players;
       })
 
     })
