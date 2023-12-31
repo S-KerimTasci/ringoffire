@@ -3,7 +3,7 @@ import { Game } from '../models/game';
 import { MatDialog, } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Firestore, collectionData, collection, onSnapshot, doc, addDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, onSnapshot, doc, addDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -13,10 +13,9 @@ import { Observable } from 'rxjs';
   styleUrl: './game.component.scss'
 })
 export class GameComponent implements OnInit {
-  pickCardAnimation = false;
   game: Game;
-  currentCard: string = '';
   firestore: Firestore = inject(Firestore);
+  gameID : string;
 
   unsubGame(){};
 
@@ -33,12 +32,12 @@ export class GameComponent implements OnInit {
       });
     })
 
-    this.items$ = collectionData(this.getGameRef());
-    this.item = this.items$.subscribe( (list) => {
-      list.forEach(element => {
-        console.log(element)
-      });
-    })
+    // this.items$ = collectionData(this.getGameRef());
+    // this.item = this.items$.subscribe( (list) => {
+    //   list.forEach(element => {
+    //     console.log(element)
+    //   });
+    // })
   };
 
   ngOnDestroy() {
@@ -63,39 +62,38 @@ export class GameComponent implements OnInit {
       
       this.unsubGame = onSnapshot(this.getSingleDocRef("games", params['id']), (element : any) => {
         console.log('Game ID: ' + element.id);
-        console.log(element.data().players)
+        this.gameID = element.id;
 
         this.game.currentPlayer = element.data().currentPlayer,
         this.game.playedCards = element.data().playedCards;
         this.game.stack = element.data().stack;
         this.game.players = element.data().players;
+        this.game.pickCardAnimation = element.data().pickCardAnimation;
+        this.game.currentCard = element.data().currentCard;
       })
-
     })
-
   }
 
   async newGame() {
     this.game = new Game();
     console.log(this.game)
-    
   }
 
   takeCard() {
-
-
-    if (!this.pickCardAnimation) {
+    if (!this.game.pickCardAnimation) {
       if (this.game.players.length > 1) {
 
-        this.currentCard = this.game.stack.pop();
-        this.pickCardAnimation = true;
+        this.game.currentCard = this.game.stack.pop();
+        this.game.pickCardAnimation = true;
 
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.updateGame();
 
         setTimeout(() => {
-          this.game.playedCards.push(this.currentCard)
-          this.pickCardAnimation = false;
+          this.game.playedCards.push(this.game.currentCard)
+          this.game.pickCardAnimation = false;
+          this.updateGame();
           if (this.game.stack.length == 0) {
             this.router.navigateByUrl('/end')
           }
@@ -120,13 +118,20 @@ export class GameComponent implements OnInit {
       dialogRef.afterClosed().subscribe((name: string) => {
         if (name && name.length > 0) {
           this.game.players.push(name)
+          this.updateGame();
         }
 
       });
     } else {
       alert('Maximum 6 players')
     }
+  }
 
+  updateGame(){
+    updateDoc(this.getSingleDocRef('games', this.gameID), this.game.toJSON() ).catch((err) => {
+      console.log(err);
+      
+    })
   }
 }
 
